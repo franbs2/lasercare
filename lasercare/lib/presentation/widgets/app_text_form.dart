@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../core/colors.dart';
+import '../../core/app_colors.dart';
 
 class AppTextForm extends StatefulWidget {
   final String labelText;
@@ -85,7 +85,7 @@ class _AppTextFormState extends State<AppTextForm> {
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility : Icons.visibility_off,
-                  color: ColorsApp.secondaryColor,
+                  color: AppColors.secondaryColor,
                 ),
                 onPressed: () {
                   setState(() {

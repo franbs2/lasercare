@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'home_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lasercare/presentation/view/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return MaterialApp(
+      home: const RegisterPage(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.soraTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
+    );
   }
 }
