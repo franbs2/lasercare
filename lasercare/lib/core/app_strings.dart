@@ -26,4 +26,6 @@ class AppStrings {
   static const String termsOfUse = 'Termos de Uso';
   static const String loginWithClinic = 'Entre com a sua clínica';
   static const String enterYourPassword = 'Digite sua senha';
+  static const String invalidEmailOrPassword = 'E-mail ou senha inválidos';
+  static const String passwordsDoNotMatch = 'Senhas não conferem';
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lasercare/core/app_colors.dart';
-import 'package:lasercare/core/app_strings.dart';
 
 class AppButtonPrimary extends StatelessWidget {
   final String textButton;

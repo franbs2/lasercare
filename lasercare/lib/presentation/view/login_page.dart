@@ -95,7 +95,9 @@ class _LoginPageState extends State<LoginPage> {
                 AppAuthNavigation(
                   text: AppStrings.alreadyNotHaveAnAccount,
                   actionText: AppStrings.register,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
