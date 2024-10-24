@@ -1,7 +1,8 @@
 class AppStrings {
   static const String appName = 'LaserCare';
   static const String register = 'Cadastrar';
-  static const String alreadyHaveAnAccount = 'Já possui uma conta?';
+  static const String alreadyHaveAnAccount = 'Já possui uma conta? ';
+  static const String alreadyNotHaveAnAccount = 'Não possui uma conta? ';
   static const String login = 'Entrar';
   static const String email = 'E-mail';
   static const String password = 'Senha';
@@ -23,5 +24,6 @@ class AppStrings {
   static const String confirmPass = 'Confirmar senha';
   static const String aceptThe = 'Aceito os ';
   static const String termsOfUse = 'Termos de Uso';
-
-  }
+  static const String loginWithClinic = 'Entre com a sua clínica';
+  static const String enterYourPassword = 'Digite sua senha';
+}
