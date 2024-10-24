@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lasercare/core/app_colors.dart';
 import 'package:lasercare/core/app_formatter_input.dart';
 import 'package:lasercare/core/app_images.dart';
+import 'package:lasercare/core/app_routes.dart';
 import 'package:lasercare/core/app_strings.dart';
+import 'package:lasercare/presentation/providers/auth_provider.dart';
 import 'package:lasercare/presentation/widgets/app_auth_navigation.dart';
 import 'package:lasercare/presentation/widgets/app_button_primary.dart';
+import 'package:lasercare/presentation/widgets/app_circular_progress_primary.dart';
 import 'package:lasercare/presentation/widgets/app_text_form.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,8 +27,30 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  bool value = false;
+  bool checkValue = false;
   final cnpjFormatter = AppFormatterInput.cnpjFormatter;
+
+  bool isLoadin = false;
+  Future<void> _submitForm() async {
+    final isValid = _keyForm.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    _keyForm.currentState!.save();
+
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+    try {
+      await authProvider.registerUser(
+          name: _nameController.text,
+          email: _emailController.text,
+          cnpj: _cnpjController.text,
+          password: _passwordController.text);
+    } catch (err) {
+      print(err);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +59,13 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+            padding:
+                const EdgeInsets.only(left: 32, right: 32, top: 38, bottom: 8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(AppImages.curativeLogo, width: 68, height: 68),
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
                 const Text(
                   AppStrings.registerYourClinic,
                   style: TextStyle(
@@ -121,62 +148,93 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return AppStrings.requiredField;
+                          } else if (value != _passwordController.text) {
+                            return AppStrings.passwordsDoNotMatch;
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Transform.scale(
-                            scale: 0.8,
-                            child: Checkbox(
-                              checkColor: Colors.white,
-                              activeColor: AppColors.primaryColor,
-                              value: value,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  value = newValue ?? false;
-                                });
-                              },
+                      FormField(
+                        builder: (state) => Column(
+                          children: [
+                            Row(
+                              children: [
+                                Transform.scale(
+                                  scale: 0.8,
+                                  child: Checkbox(
+                                      checkColor: Colors.white,
+                                      activeColor: AppColors.primaryColor,
+                                      value: checkValue,
+                                      onChanged: (value) => setState(() {
+                                            checkValue = value!;
+                                            state.didChange(value);
+                                          })),
+                                ),
+                                const Text(AppStrings.aceptThe,
+                                    style: TextStyle(fontSize: 12)),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed(AppRoutes.termsOfUsePage);
+                                  },
+                                  child: const Text(
+                                    AppStrings.termsOfUse,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const Text(AppStrings.aceptThe,
-                              style: TextStyle(fontSize: 12)),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                            ),
-                            onPressed: () {},
-                            child: const Text(
-                              AppStrings.termsOfUse,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
+                            (state.hasError)
+                                ? Text(
+                                    state.errorText ?? '',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.error,
+                                      fontSize: 12,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        ),
+                        validator: (value) {
+                          if (!checkValue) {
+                            return 'Para continuar, aceite os termos de uso';
+                          }
+                          return null;
+                        },
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: AppButtonPrimary(
-                        textButton: AppStrings.register,
-                        onPressed: () {},
-                      )),
-                ),
+                (isLoadin)
+                    ? const AppCircularProgressPrimary()
+                    : Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: SizedBox(
+                            width: double.infinity,
+                            child: AppButtonPrimary(
+                              textButton: AppStrings.register,
+                              onPressed: () {
+                                _submitForm();
+                              },
+                            )),
+                      ),
                 const SizedBox(height: 4),
                 AppAuthNavigation(
                     text: AppStrings.alreadyHaveAnAccount,
                     actionText: AppStrings.login,
-                    onPressed: () {}),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.loginPage);
+                    }),
               ],
             ),
           ),
