@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lasercare/core/app_colors.dart';
 import 'package:lasercare/core/app_formatter_input.dart';
+import 'package:lasercare/core/app_images.dart';
 import 'package:lasercare/core/app_strings.dart';
+import 'package:lasercare/presentation/widgets/app_auth_navigation.dart';
+import 'package:lasercare/presentation/widgets/app_button_primary.dart';
 import 'package:lasercare/presentation/widgets/app_text_form.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -30,10 +33,12 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(AppImages.curativeLogo, width: 68, height: 68),
+                const SizedBox(height: 32),
                 const Text(
                   AppStrings.registerYourClinic,
                   style: TextStyle(
@@ -47,7 +52,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   key: _keyForm,
                   child: Column(
                     children: [
-                      const SizedBox(height: 24),
                       AppTextForm(
                         controller: _nameController,
                         labelText: AppStrings.nameClinic,
@@ -125,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Row(
                         children: [
                           Transform.scale(
-                            scale: 0.8, // Ajusta o tamanho do Checkbox
+                            scale: 0.8,
                             child: Checkbox(
                               checkColor: Colors.white,
                               activeColor: AppColors.primaryColor,
@@ -162,45 +166,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        AppStrings.register,
-                        style: TextStyle(
-                            fontSize: 16, color: AppColors.tertiaryColor),
-                      ),
-                    ),
-                  ),
+                      width: double.infinity,
+                      child: AppButtonPrimary(
+                        textButton: AppStrings.register,
+                        onPressed: () {},
+                      )),
                 ),
                 const SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(AppStrings.alreadyHaveAnAccount,
-                        style: TextStyle(fontSize: 14)),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        AppStrings.login,
-                        style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
+                AppAuthNavigation(
+                    text: AppStrings.alreadyHaveAnAccount,
+                    actionText: AppStrings.login,
+                    onPressed: () {}),
               ],
             ),
           ),
