@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lasercare/core/app_colors.dart';
-import 'package:lasercare/core/app_formatter_input.dart';
-import 'package:lasercare/core/app_strings.dart';
-import 'package:lasercare/presentation/widgets/app_auth_navigation.dart';
-import 'package:lasercare/presentation/widgets/app_button_primary.dart';
-import 'package:lasercare/presentation/widgets/app_text_form.dart';
 
-import '../../core/app_images.dart';
+import '../../../core/ultils/app_formatter_input.dart';
+import '../../../core/ultils/app_images.dart';
+import '/core/style/app_colors.dart';
+import '/core/ultils/app_strings.dart';
+import '/features/presentation/widgets/app_auth_navigation.dart';
+import '/features/presentation/widgets/app_button_primary.dart';
+import '/features/presentation/widgets/app_text_form.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

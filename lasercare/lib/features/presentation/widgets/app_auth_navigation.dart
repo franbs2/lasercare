@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/app_colors.dart';
+import '../../../core/style/app_colors.dart';
 
 class AppAuthNavigation extends StatelessWidget {
   final String text;

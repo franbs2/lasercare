@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lasercare/core/app_colors.dart';
+import '/core/style/app_colors.dart';
 
 class AppCircularProgressPrimary extends StatelessWidget {
   const AppCircularProgressPrimary({super.key});
