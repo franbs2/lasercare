@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool checkValue = false;
   final cnpjFormatter = AppFormatterInput.cnpjFormatter;
 
-  void _submitForm() {
+  void _submitRegister() {
     if (!_keyForm.currentState!.validate()) return;
 
     final provider = Provider.of<RegisterProvider>(context, listen: false);
@@ -229,7 +229,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: AppButtonPrimary(
                                 textButton: AppStrings.register,
                                 onPressed: () {
-                                  _submitForm();
+                                  _submitRegister();
                                 },
                               )),
                         ),
@@ -238,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: AppStrings.alreadyHaveAnAccount,
                       actionText: AppStrings.login,
                       onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.loginPage);
+                        Navigator.pop(context);
                       }),
                 ],
               ),

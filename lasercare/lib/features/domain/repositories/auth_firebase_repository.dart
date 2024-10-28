@@ -7,4 +7,9 @@ abstract class AuthFirebaseRepository {
     required String cnpj,
     required String password,
   });
+
+  Future<User?> loginUser({
+    required String email,
+    required String password,
+  });
 }
